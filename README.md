@@ -212,4 +212,3 @@ MariaDB [info]> select * from details;
 +-------+-------+------+-----------+-------+
 4 rows in set (0.000 sec)
 
-MariaDB [info]>
