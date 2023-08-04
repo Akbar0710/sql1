@@ -1,0 +1,259 @@
+Microsoft Windows [Version 10.0.22000.493]
+(c) Microsoft Corporation. All rights reserved.
+
+C:\Users\k>cd\
+
+C:\>cd xampp
+
+C:\xampp>cd mysql
+
+C:\xampp\mysql>cd bin
+
+C:\xampp\mysql\bin>mysql -u root
+ERROR 2002 (HY000): Can't connect to MySQL server on 'localhost' (10061)
+
+C:\xampp\mysql\bin>mysql -u root;
+ERROR 2002 (HY000): Can't connect to MySQL server on 'localhost' (10061)
+
+C:\xampp\mysql\bin>mysql -u root
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MariaDB connection id is 8
+Server version: 10.4.24-MariaDB mariadb.org binary distribution
+
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MariaDB [(none)]> show databases;
++--------------------+
+| Database           |
++--------------------+
+| again              |
+| bd                 |
+| employee           |
+| exam               |
+| info               |
+| information_schema |
+| lol                |
+| main               |
+| mysql              |
+| new                |
+| new1               |
+| oo                 |
+| performance_schema |
+| phpmyadmin         |
+| temp               |
+| test               |
+| today              |
+| univ               |
++--------------------+
+18 rows in set (0.034 sec)
+
+MariaDB [(none)]> use again;
+Database changed
+MariaDB [again]> create table student(regno int(2),name varchar(16),age int(2),section varchar(1));
+ERROR 1050 (42S01): Table 'student' already exists
+MariaDB [again]> create table student2(regno int(2),name varchar(16),age int(2),section varchar(1));
+Query OK, 0 rows affected (0.031 sec)
+
+MariaDB [again]> desc student2;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| regno   | int(2)      | YES  |     | NULL    |       |
+| name    | varchar(16) | YES  |     | NULL    |       |
+| age     | int(2)      | YES  |     | NULL    |       |
+| section | varchar(1)  | YES  |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+4 rows in set (0.013 sec)
+
+MariaDB [again]> insert into student2 vvalues(1,"hem",19,"A"),(2,"joy",20,"B"),(3,"leo",20,"C");
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'vvalues(1,"hem",19,"A"),(2,"joy",20,"B"),(3,"leo",20,"C")' at line 1
+MariaDB [again]> insert into student2 values(1,"hem",19,"A"),(2,"joy",20,"B"),(3,"leo",20,"C");
+Query OK, 3 rows affected (0.037 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+MariaDB [again]> create table student2(regno int(2),sub1_marks(2),sub2_marks int(2));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '(2),sub2_marks int(2))' at line 1
+MariaDB [again]> create table marks2(regno int(2),sub1_marks(2),sub2_marks int(2));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '(2),sub2_marks int(2))' at line 1
+MariaDB [again]> create table marks2(regno int(2),sub1_marks int(2),sub2_marks int(2));
+Query OK, 0 rows affected (0.042 sec)
+
+MariaDB [again]> desc marks2;
++------------+--------+------+-----+---------+-------+
+| Field      | Type   | Null | Key | Default | Extra |
++------------+--------+------+-----+---------+-------+
+| regno      | int(2) | YES  |     | NULL    |       |
+| sub1_marks | int(2) | YES  |     | NULL    |       |
+| sub2_marks | int(2) | YES  |     | NULL    |       |
++------------+--------+------+-----+---------+-------+
+3 rows in set (0.012 sec)
+
+MariaDB [again]> insert into marks2 values(1,48,46),(2,45,46),(3,43,50);
+Query OK, 3 rows affected (0.004 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+MariaDB [again]> select * from student2;
++-------+------+------+---------+
+| regno | name | age  | section |
++-------+------+------+---------+
+|     1 | hem  |   19 | A       |
+|     2 | joy  |   20 | B       |
+|     3 | leo  |   20 | C       |
++-------+------+------+---------+
+3 rows in set (0.000 sec)
+
+MariaDB [again]> select * from marks2;
++-------+------------+------------+
+| regno | sub1_marks | sub2_marks |
++-------+------------+------------+
+|     1 |         48 |         46 |
+|     2 |         45 |         46 |
+|     3 |         43 |         50 |
++-------+------------+------------+
+3 rows in set (0.000 sec)
+
+MariaDB [again]> select stu.regno,stu.name,stu.section,mar.sub1_marks,mar.sub2_marksfrom student2=stu inner join marks2 as marks;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '=stu inner join marks2 as marks' at line 1
+MariaDB [again]> select stu.regno,stu.name,stu.section,mar.sub1_marks,mar.sub2_marksfrom student2=stu inner join marks2 as marks on stu.regno=mar.regno;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '=stu inner join marks2 as marks on stu.regno=mar.regno' at line 1
+MariaDB [again]> select stu.regno,stu.name,stu.section,mar.sub1_marks,mar.sub2_marksfrom student2 as stu inner join marks2 as marks on stu.regno=mar.regno;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'as stu inner join marks2 as marks on stu.regno=mar.regno' at line 1
+MariaDB [again]> select stu.regno,stu.name,stu.section,mar.sub1_marks,mar.sub2_marksfrom student2 as stu inner join marks2;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'as stu inner join marks2' at line 1
+MariaDB [again]> select stu.regno,stu.name,stu.section,mar.sub1_marks,mar.sub2_marksfrom student2 as stu inner join marks2 as mar on stu.regno=mar.regno;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'as stu inner join marks2 as mar on stu.regno=mar.regno' at line 1
+MariaDB [again]> select stu.regno,stu.name,stu.section,mar.sub1_marks,mar.sub2_marks from student2 as stu inner join marks2 as mar on stu.regno = mar.regno;
++-------+------+---------+------------+------------+
+| regno | name | section | sub1_marks | sub2_marks |
++-------+------+---------+------------+------------+
+|     1 | hem  | A       |         48 |         46 |
+|     2 | joy  | B       |         45 |         46 |
+|     3 | leo  | C       |         43 |         50 |
++-------+------+---------+------------+------------+
+3 rows in set (0.001 sec)
+
+MariaDB [again]> select stu.regno,stu.name,stu.section,mar.sub1_from student2 as stu inner join marks2 as mar on stu.regno=mar.regno;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'as stu inner join marks2 as mar on stu.regno=mar.regno' at line 1
+MariaDB [again]> select stu.regno,stu.name,stu.section,mar.sub1_marks from student2 as stu inner join marks2 as mar on stu.regno=mar.regno;
++-------+------+---------+------------+
+| regno | name | section | sub1_marks |
++-------+------+---------+------------+
+|     1 | hem  | A       |         48 |
+|     2 | joy  | B       |         45 |
+|     3 | leo  | C       |         43 |
++-------+------+---------+------------+
+3 rows in set (0.000 sec)
+
+MariaDB [again]> select stu.regno,stu.name,stu.section,mar.sub1_marks from student2 as stu right join marks2 as mar on stu.regno=mar.regno;
++-------+------+---------+------------+
+| regno | name | section | sub1_marks |
++-------+------+---------+------------+
+|     1 | hem  | A       |         48 |
+|     2 | joy  | B       |         45 |
+|     3 | leo  | C       |         43 |
++-------+------+---------+------------+
+3 rows in set (0.000 sec)
+
+MariaDB [again]> select stu.regno,stu.name,stu.section,mar.sub1_marks from student2 as stu left join marks2 as mar on stu.regno=mar.regno;
++-------+------+---------+------------+
+| regno | name | section | sub1_marks |
++-------+------+---------+------------+
+|     1 | hem  | A       |         48 |
+|     2 | joy  | B       |         45 |
+|     3 | leo  | C       |         43 |
++-------+------+---------+------------+
+3 rows in set (0.001 sec)
+
+MariaDB [again]> select stu.regno,stu.name,stu.section,mar.sub1_marks from student2 as stu outer join marks2 as mar on stu.regno=mar.regno;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'outer join marks2 as mar on stu.regno=mar.regno' at line 1
+MariaDB [again]> select stu.regno,stu.name,stu.section,mar.sub1_marks from student2 as stu outer join marks2 as mar on stu.regno=mar.regno;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'outer join marks2 as mar on stu.regno=mar.regno' at line 1
+MariaDB [again]> insert into student2 values(4,"neo",20,"E");
+Query OK, 1 row affected (0.012 sec)
+
+MariaDB [again]> select stu.regno,stu.name,stu.section,mar.sub1_marks,mar.sub2_marks from student2 as stu inner join marks2 as mar on stu.regno = mar.regno;
++-------+------+---------+------------+------------+
+| regno | name | section | sub1_marks | sub2_marks |
++-------+------+---------+------------+------------+
+|     1 | hem  | A       |         48 |         46 |
+|     2 | joy  | B       |         45 |         46 |
+|     3 | leo  | C       |         43 |         50 |
++-------+------+---------+------------+------------+
+3 rows in set (0.000 sec)
+
+MariaDB [again]> select stu.regno,stu.name,stu.section,mar.sub1_marks,mar.sub2_marks from student2 as stu left join marks2 as mar on stu.regno = mar.regno;
++-------+------+---------+------------+------------+
+| regno | name | section | sub1_marks | sub2_marks |
++-------+------+---------+------------+------------+
+|     1 | hem  | A       |         48 |         46 |
+|     2 | joy  | B       |         45 |         46 |
+|     3 | leo  | C       |         43 |         50 |
+|     4 | neo  | E       |       NULL |       NULL |
++-------+------+---------+------------+------------+
+4 rows in set (0.000 sec)
+
+MariaDB [again]> select stu.regno,stu.name,stu.section,mar.sub1_marks,mar.sub2_marks from student2 as stu right join marks2 as mar on stu.regno = mar.regno;
++-------+------+---------+------------+------------+
+| regno | name | section | sub1_marks | sub2_marks |
++-------+------+---------+------------+------------+
+|     1 | hem  | A       |         48 |         46 |
+|     2 | joy  | B       |         45 |         46 |
+|     3 | leo  | C       |         43 |         50 |
++-------+------+---------+------------+------------+
+3 rows in set (0.000 sec)
+
+MariaDB [again]> insert into marks2 values(6,46,43);
+Query OK, 1 row affected (0.011 sec)
+
+MariaDB [again]> select stu.regno,stu.name,stu.section,mar.sub1_marks,mar.sub2_marks from student2 as stu right join marks2 as mar on stu.regno = mar.regno;
++-------+------+---------+------------+------------+
+| regno | name | section | sub1_marks | sub2_marks |
++-------+------+---------+------------+------------+
+|     1 | hem  | A       |         48 |         46 |
+|     2 | joy  | B       |         45 |         46 |
+|     3 | leo  | C       |         43 |         50 |
+|  NULL | NULL | NULL    |         46 |         43 |
++-------+------+---------+------------+------------+
+4 rows in set (0.000 sec)
+
+MariaDB [again]> select stu.regno,stu.name,stu.section,mar.sub1_marks,mar.sub2_marks from student2 as stu outer join marks2 as mar on stu.regno = mar.regno;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'outer join marks2 as mar on stu.regno = mar.regno' at line 1
+MariaDB [again]> select stu.regno,stu.name,stu.section,mar.sub1_marks,mar.sub2_marks from student2 as stu outer join marks2 as mar on stu.regno = mar.regno;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'outer join marks2 as mar on stu.regno = mar.regno' at line 1
+MariaDB [again]> create view or replace student1 as select regno,surname from student1;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'or replace student1 as select regno,surname from student1' at line 1
+MariaDB [again]> create or replace view student1 as select regno,surname from student1;
+ERROR 1146 (42S02): Table 'again.student1' doesn't exist
+MariaDB [again]> create or replace view student1 as select regno,surname from student2;
+ERROR 1054 (42S22): Unknown column 'surname' in 'field list'
+MariaDB [again]> create or replace view student1 as select regno,name from student2;
+Query OK, 0 rows affected (0.009 sec)
+
+MariaDB [again]> decs student1;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'decs student1' at line 1
+MariaDB [again]> desc student1;
++-------+-------------+------+-----+---------+-------+
+| Field | Type        | Null | Key | Default | Extra |
++-------+-------------+------+-----+---------+-------+
+| regno | int(2)      | YES  |     | NULL    |       |
+| name  | varchar(16) | YES  |     | NULL    |       |
++-------+-------------+------+-----+---------+-------+
+2 rows in set (0.016 sec)
+
+MariaDB [again]> create or replace view student1 sal int(5) as select regno,name from student2;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'sal int(5) as select regno,name from student2' at line 1
+MariaDB [again]> create or replace view student1 as select regno,name from student2;
+Query OK, 0 rows affected (0.014 sec)
+
+MariaDB [again]> desc student1;
++-------+-------------+------+-----+---------+-------+
+| Field | Type        | Null | Key | Default | Extra |
++-------+-------------+------+-----+---------+-------+
+| regno | int(2)      | YES  |     | NULL    |       |
+| name  | varchar(16) | YES  |     | NULL    |       |
++-------+-------------+------+-----+---------+-------+
+2 rows in set (0.014 sec)
+
+MariaDB [again]>
